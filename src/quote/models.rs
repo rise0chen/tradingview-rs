@@ -49,7 +49,7 @@ pub struct QuoteValue {
     pub price: Option<f64>,
     #[cfg_attr(feature = "protobuf", prost(double, optional, tag = "12"))]
     #[serde(default, rename(deserialize = "lp_time"))]
-    pub timestamp: Option<f64>,
+    pub timestamp: Option<u64>,
     #[cfg_attr(feature = "protobuf", prost(double, optional, tag = "13"))]
     #[serde(default)]
     pub volume: Option<f64>,

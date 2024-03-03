@@ -20,7 +20,7 @@ async fn main() -> anyhow::Result<()> {
         .unwrap();
     let mut publisher: DataLoader = DataLoader::default();
     publisher.callbacks.on_quote_data(move |v| async move {
-        tracing::info!("my quote: {:?}", v);
+        tracing::info!("{}:{:?}:{}", v.bid.unwrap(), v.price, v.ask.unwrap());
     });
     loop {
         let publisher = publisher.clone();
@@ -29,7 +29,7 @@ async fn main() -> anyhow::Result<()> {
         let mut socket_ctrl = socket.clone();
         tokio::spawn(async move {
             tokio::time::sleep(Duration::from_secs(5)).await;
-            let _ = socket_ctrl.close().await;
+            //let _ = socket_ctrl.close().await;
         });
         let mut quote = quote::session::WebSocket::new(publisher, socket);
         quote
@@ -39,7 +39,7 @@ async fn main() -> anyhow::Result<()> {
             .set_fields()
             .await
             .unwrap();
-        quote.add_symbols(vec!["BINANCE:APEUSDT"]).await.unwrap();
+        quote.add_symbols(vec!["BINANCE:APEUSDT.P"]).await.unwrap();
         quote.subscribe().await;
         tracing::error!("quote had closed");
         tokio::time::sleep(Duration::from_secs(5)).await;

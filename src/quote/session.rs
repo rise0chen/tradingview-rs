@@ -44,7 +44,7 @@ impl<'a> WebSocket<'a> {
     pub async fn set_fields(&mut self) -> Result<&mut Self> {
         let mut quote_fields =
             payload![self.data_loader.metadata.quote_session.clone().to_string()];
-        quote_fields.extend(ALL_QUOTE_FIELDS.clone().into_iter().map(Value::from));
+        quote_fields.extend(ALL_QUOTE_FIELDS.iter().map(|x| Value::from(*x)));
         self.socket.send("quote_set_fields", &quote_fields).await?;
         Ok(self)
     }

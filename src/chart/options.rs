@@ -1,8 +1,8 @@
 use iso_currency::Currency;
 
 use crate::{
-    chart::{ ChartOptions, StudyOptions },
-    models::{ Interval, MarketAdjustment, SessionType, pine_indicator::ScriptType },
+    chart::{ChartOptions, StudyOptions},
+    models::{pine_indicator::ScriptType, Interval, MarketAdjustment, SessionType},
 };
 
 impl ChartOptions {
@@ -69,7 +69,7 @@ impl ChartOptions {
         mut self,
         script_id: &str,
         script_version: &str,
-        script_type: ScriptType
+        script_type: ScriptType,
     ) -> Self {
         self.study_config = Some(StudyOptions {
             script_id: script_id.to_string(),

@@ -19,6 +19,9 @@ pub fn merge_quotes(quote_old: &QuoteValue, quote_new: &QuoteValue) -> QuoteValu
         currency: quote_new.currency.clone().or(quote_old.currency.clone()),
         symbol: quote_new.symbol.clone().or(quote_old.symbol.clone()),
         exchange: quote_new.exchange.clone().or(quote_old.exchange.clone()),
-        market_type: quote_new.market_type.clone().or(quote_old.market_type.clone()),
+        market_type: quote_new
+            .market_type
+            .clone()
+            .or(quote_old.market_type.clone()),
     }
 }
