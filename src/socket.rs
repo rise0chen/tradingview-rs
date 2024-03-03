@@ -302,7 +302,7 @@ pub trait Socket {
                 }
                 None => {
                     debug!("no messages to read");
-                    continue;
+                    break;
                 }
             }
         }

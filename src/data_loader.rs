@@ -21,7 +21,7 @@ use tracing::{debug, error, trace};
 #[derive(Clone, Default)]
 pub struct DataLoader<'a> {
     pub(crate) metadata: Metadata,
-    pub(crate) callbacks: Callbacks<'a>,
+    pub callbacks: Callbacks<'a>,
 }
 
 #[derive(Default, Debug, Clone)]
