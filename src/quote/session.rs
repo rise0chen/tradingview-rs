@@ -50,9 +50,9 @@ impl<'a> WebSocket<'a> {
         Ok(self)
     }
 
-    pub async fn add_symbols(&mut self, symbols: Vec<&str>) -> Result<&mut Self> {
+    pub async fn add_symbols(&mut self, symbols: &[&str]) -> Result<&mut Self> {
         let mut payloads = payload![self.data_loader.metadata.quote_session.clone()];
-        payloads.extend(symbols.into_iter().map(Value::from));
+        payloads.extend(symbols.iter().map(|x|Value::from(*x)));
         self.socket.send("quote_add_symbols", &payloads).await?;
         Ok(self)
     }
@@ -62,16 +62,16 @@ impl<'a> WebSocket<'a> {
         Ok(self)
     }
 
-    pub async fn fast_symbols(&mut self, symbols: Vec<&str>) -> Result<&mut Self> {
+    pub async fn fast_symbols(&mut self, symbols: &[&str]) -> Result<&mut Self> {
         let mut payloads = payload![self.data_loader.metadata.quote_session.clone()];
-        payloads.extend(symbols.into_iter().map(Value::from));
+        payloads.extend(symbols.iter().map(|x|Value::from(*x)));
         self.socket.send("quote_fast_symbols", &payloads).await?;
         Ok(self)
     }
 
-    pub async fn remove_symbols(&mut self, symbols: Vec<&str>) -> Result<&mut Self> {
+    pub async fn remove_symbols(&mut self, symbols: &[&str]) -> Result<&mut Self> {
         let mut payloads = payload![self.data_loader.metadata.quote_session.clone()];
-        payloads.extend(symbols.into_iter().map(Value::from));
+        payloads.extend(symbols.iter().map(|x|Value::from(*x)));
         self.socket.send("quote_remove_symbols", &payloads).await?;
         Ok(self)
     }
