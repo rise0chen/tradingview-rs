@@ -48,12 +48,19 @@ pub fn build_request(cookie: Option<&str>) -> Result<reqwest::Client> {
         headers.insert(COOKIE, HeaderValue::from_str(cookie)?);
     }
 
-    let client = reqwest::Client::builder()
-        .use_rustls_tls()
+    let mut client = reqwest::Client::builder()
         .default_headers(headers)
         .https_only(true)
-        .user_agent(crate::UA)
-        .build()?;
+        .user_agent(crate::UA);
+    #[cfg(feature = "rustls-tls")]
+    {
+        client = client.use_rustls_tls();
+    }
+    #[cfg(feature = "native-tls")]
+    {
+        client = client.use_native_tls();
+    }
+    let client = client.build()?;
     Ok(client)
 }
 
