@@ -34,7 +34,7 @@ url = "2"
 urlencoding = "2"
 rand = "^0.8"
 regex = "1"
-tokio-tungstenite = { version = "0.24" }
+tokio-tungstenite = { version = "0.24", features = ["url"] }
 tracing = "0.1"
 thiserror = "1"
 futures-util = { version = "0.3", default-features = false, features = [
@@ -55,9 +55,9 @@ dotenv = "0.15.0"
 tracing-subscriber = "0.3"
 chrono = { version = "0.4.31", features = ["serde"] }
 minifb = "0.23.0"
-plotters ={git = "https://github.com/plotters-rs/plotters",default_features = false,features = ["ttf","candlestick"]}
-plotters-bitmap={git = "https://github.com/plotters-rs/plotters",default_features = false}
-plotters-backend={git = "https://github.com/plotters-rs/plotters",default_features = false}
+plotters ={git = "https://github.com/plotters-rs/plotters",default-features = false,features = ["ttf","candlestick"]}
+plotters-bitmap={git = "https://github.com/plotters-rs/plotters",default-features = false}
+plotters-backend={git = "https://github.com/plotters-rs/plotters",default-features = false}
 
 # [[bench]]
 # harness = false
