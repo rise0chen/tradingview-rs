@@ -11,7 +11,7 @@ use futures_util::{
 };
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
-use std::sync::Arc;
+use std::{sync::Arc, time::Duration};
 use tokio::{net::TcpStream, sync::Mutex};
 use tokio_tungstenite::{
     connect_async,
@@ -294,14 +294,19 @@ pub trait Socket {
         let mut read_guard = read.lock().await;
         loop {
             trace!("waiting for next message");
-            match read_guard.next().await {
+            let Ok(data) = tokio::time::timeout(Duration::from_secs(30), read_guard.next()).await
+            else {
+                error!("read timeout");
+                break;
+            };
+            match data {
                 Some(Ok(message)) => self.handle_raw_messages(session, message).await,
                 Some(Err(e)) => {
                     error!("Error reading message: {:#?}", e);
                     self.handle_error(Error::WebSocketError(e)).await;
                 }
                 None => {
-                    debug!("no messages to read");
+                    error!("no messages to read");
                     break;
                 }
             }
